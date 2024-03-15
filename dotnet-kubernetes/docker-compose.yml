@@ -1,23 +1,24 @@
 version: '3.4'
 
-services: 
+services:
 
   frontend:
     image: storeimage
     build:
       context: .
       dockerfile: DockerfileStore
-    environment: 
+    environment:
       - ProductEndpoint=http://backend:8080
-      - ImagePrefix=http://localhost
+      - ImagePrefix=http://localhost:32001/images/
     ports:
       - "32000:8080"
-    depends_on: 
+    depends_on:
       - backend
+
   backend:
     image: productservice
-    build: 
+    build:
       context: .
       dockerfile: DockerfileProducts
-    ports: 
+    ports:
       - "32001:8080"

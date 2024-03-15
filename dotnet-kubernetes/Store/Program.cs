@@ -15,7 +15,23 @@ builder.Services.AddHttpClient<ProductService>(c =>
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+builder.Logging.SetMinimumLevel(LogLevel.Debug);
+
 var app = builder.Build();
+
+// var logger = app.Services.GetRequiredService<ILoggerFactory>()
+//     .CreateLogger<Program>();
+
+var configuration = app.Services.GetRequiredService<IConfiguration>();
+Console.WriteLine("toto");
+
+app.Logger.LogInformation($"Logged after the app is built in the Program file.");
+
+var imagePrefix = configuration["ImagePrefix"];
+
+app.Logger.LogInformation("Configuration ImagePrefix = " + imagePrefix);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
